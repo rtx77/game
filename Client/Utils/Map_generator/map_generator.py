@@ -1,10 +1,8 @@
 import pygame
 import json
 from PyQt5.QtWidgets import QApplication
-from PyQt5.QtWidgets import QWidget, QMessageBox
-from PyQt5 import QtWidgets
-
-
+from Windowidjet import Example
+import Windowidjet
 import sys
 import os.path
 
@@ -16,47 +14,7 @@ pygame.display.set_caption('Map generator')
 
 GREEN = (0, 255, 0)
 
-class Example(QWidget):
-
-    def __init__(self):
-        super().__init__()
-
-        self.initUI()
-
-    def click(self):
-        global map_name
-        map_name = self.textbox.text()
-
-    def initUI(self):
-
-        self.setGeometry(400,400,400,300)
-        self.setWindowTitle('Message box')
-        self.setFixedSize(400, 300)
-        self.textbox = QtWidgets.QLineEdit(self)
-        self.textbox.move(100, 100)
-        self.textbox.resize(180, 40)
-        button = QtWidgets.QPushButton(self)
-        button.setText("MAP name")
-        button.move(150, 200)
-        button.clicked.connect(self.click)
-        self.show()
-
-
-    def closeEvent(self, event1):
-        global dop_window
-
-        reply = QMessageBox.question(self, 'Message',
-                                     "Are you sure to quit?", QMessageBox.Yes |
-                                     QMessageBox.No, QMessageBox.No)
-
-        if reply == QMessageBox.Yes:
-            dop_window = True
-            self.close()
-        else:
-            event1.ignore()
-            
-
-map_name = '.'
+Windowidjet.map_name = '.'
 
 if not os.path.exists("file.txt"):
     with open('file.txt', 'a') as fw:
@@ -107,7 +65,7 @@ while not game_over:
 
         if event.type == pygame.KEYUP:
             with open('file.txt', 'a') as fw:
-                fw.write(",\x22" + map_name + "\x22:")
+                fw.write(",\x22" + Windowidjet.map_name + "\x22:")
                 json.dump(Rect.rect_coordinate_list, fw)
 
         if event.type == pygame.QUIT:
