@@ -2,6 +2,8 @@ import socket
 import time
 from threading import Thread
 
+print("f")
+
 class Network:
     room_pull = []
 
